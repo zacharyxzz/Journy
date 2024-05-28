@@ -10,8 +10,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/sign-up" Component={Auth}/>
-          <Route path="/" exact />
+          <Route path="/sign-up" Component={Auth} />
           <Route path="/" exact Component={Home} />
         </Routes>
       </Router>
