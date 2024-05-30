@@ -1,0 +1,53 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url("../../public/images/img-home.jpg") center center/cover
+    no-repeat;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 30px 40px;
+    background-color: transparent;
+    border: 2px solid #ccc;
+    backdrop-filter: blur(20px);
+    border-radius: 5px;
+  }
+  
+  .box input {
+    font: arial;
+    font-size: 20px;
+    padding: 10px;
+    color: rgb(247, 233, 209);
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  
+  
+.box .error {
+    color: red;
+    font-size: 14px;
+  }
+
+  .box button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #75a7ac;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  
+  .box button:hover {
+    background-color: #0056b3;
+  }
+  
+
