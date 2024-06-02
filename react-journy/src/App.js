@@ -7,22 +7,21 @@ import { Login } from "./components/Login";
 import Dashboard from "./components/pages/DashBoard";
 import Navbar from "./components/Navbar";
 import PrivateRoutes from "./components/utils/PrivateRoutes";
-
+import { AuthProvider } from "./components/context/AuthContext";
 function App() {
   return (
-    <>
-      <Router>
-        <Navbar />
+    <Router>
+      <AuthProvider>
         <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/sign-up" element={<Auth />} />
+          <Route path="/login" element={<Login />} />
           <Route element={<PrivateRoutes />}>
-            <Route element={<Dashboard />} path="/dashboard" exact />
+            <Route path="/dashboard" exact element={<Dashboard />} />
           </Route>
-          <Route path="/sign-up" Component={Auth} />
-          <Route path="/login" Component={Login} />
-          <Route path="/" exact Component={Home} />
         </Routes>
-      </Router>
-    </>
+      </AuthProvider>
+    </Router>
   );
 }
 
