@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
-  const { navigate } = useNavigate();
+  const navigate = useNavigate();
   async function handleLogout() {
     setError("");
     try {
