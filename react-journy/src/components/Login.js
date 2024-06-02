@@ -63,7 +63,7 @@ export const Login = () => {
               {loginMessage && <div className="loginMsg">{loginMessage}</div>}
               {errorMessage && <div className="error">{errorMessage}</div>}
               <div className="forgot">
-                <a href="#">Forgot password?</a>
+                <a href="/forgot-password">Forgot password?</a>
               </div>
               <button type="submit" className="log">
                 Login

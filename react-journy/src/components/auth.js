@@ -39,6 +39,7 @@ export const Auth = () => {
 
       <div className="wrapper">
         <div className="box">
+          <h1>Sign up</h1>
           <input
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
