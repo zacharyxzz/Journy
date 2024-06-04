@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./Button";
-import "./Navbar.css";
 import SearchBar from "./SearchBar";
 
-function Navbar() {
+function HomeNav() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const handleClick = () => setClick(!click);
@@ -25,7 +24,11 @@ function Navbar() {
     <>
       <nav className="navbar">
         <div className="navbar-container">
-          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+          <Link
+            to="/dashboard"
+            className="navbar-logo"
+            onClick={closeMobileMenu}
+          >
             Journy <i class="fa-solid fa-joint"></i>
           </Link>
           <div className="menu-icon" onClick={handleClick}>
@@ -37,30 +40,37 @@ function Navbar() {
               <SearchBar></SearchBar>
             </div>
             <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/login" className="nav-links" onClick={closeMobileMenu}>
-                Login
+              <Link
+                to="/dashboard"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+                Trips
               </Link>
             </li>
             <li className="nav-item">
               <Link
-                to="/sign-up"
-                className="nav-links-mobile"
+                to="/dashboard"
+                className="nav-links"
                 onClick={closeMobileMenu}
               >
-                Sign up
+                Notifications
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                to="/profile"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+                Profile
               </Link>
             </li>
           </ul>
-          {button && <Button buttonStyle="btn--outline">SIGN UP</Button>}
         </div>
       </nav>
     </>
   );
 }
 
-export default Navbar;
+export default HomeNav;

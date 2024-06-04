@@ -8,6 +8,7 @@ import Dashboard from "./components/pages/DashBoard";
 import PrivateRoutes from "./components/utils/PrivateRoutes";
 import { AuthProvider } from "./components/context/AuthContext";
 import ForgotPassword from "./components/ForgotPassword";
+import Profile from "./components/pages/Profile";
 function App() {
   return (
     <Router>
@@ -19,6 +20,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/dashboard" exact element={<Dashboard />} />
+            <Route path="/profile" exact element={<Profile />} />
           </Route>
         </Routes>
       </AuthProvider>
