@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.profile-div {
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-top: 50px;
+  border-radius: 16px;
+  font-size: 20px;
+  border: 1px solid #dee2e6;
+  padding: 24px 16px;
+  display: flex;
+  justify-content: center;
+}
+.icon-container {
+  margin: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e9ecef;
+  color: rgb(78, 77, 77);
+  border-radius: 100px;
+  height: 200px;
+  min-width: 200px;
+  width: 200px;
+}
+#icon {
+  font-size: 60px;
+}
+.profile-button {
+  padding: 8px 20px;
+  font-size: 20px;
+  margin: 10px;
+  border: 1px solid #dee2e6;
+  transition: all 0.3s ease-out;
+}
+
+.profile-button:hover {
+  background-color: #ffff;
+  color: #242424;
+  transition: all 0.3s ease-out;
+}
