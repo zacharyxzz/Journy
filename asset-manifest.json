@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/Journy/static/css/main.d1c30a34.css",
+    "main.js": "/Journy/static/js/main.553b1fb4.js",
+    "static/media/img-home.jpg": "/Journy/static/media/img-home.c034239ee9a63564602b.jpg",
+    "index.html": "/Journy/index.html",
+    "main.d1c30a34.css.map": "/Journy/static/css/main.d1c30a34.css.map",
+    "main.553b1fb4.js.map": "/Journy/static/js/main.553b1fb4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d1c30a34.css",
+    "static/js/main.553b1fb4.js"
+  ]
+}
