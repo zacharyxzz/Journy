@@ -9,6 +9,7 @@ import PrivateRoutes from "./components/utils/PrivateRoutes";
 import { AuthProvider } from "./components/context/AuthContext";
 import ForgotPassword from "./components/ForgotPassword";
 import Profile from "./components/pages/Profile";
+import AddTrips from "./components/pages/AddTrips";
 function App() {
   return (
     <Router>
