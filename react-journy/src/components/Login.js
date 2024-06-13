@@ -18,6 +18,11 @@ export const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  const authInfo = {
+    email: loginEmail
+  }
+  localStorage.setItem("auth", JSON.stringify(authInfo));
+
   const signIn = async (event) => {
     event.preventDefault(); // Prevent the default form submission
     try {

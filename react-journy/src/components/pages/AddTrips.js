@@ -2,14 +2,22 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./DashBoard.css";
+import { useAddTrips } from "../hooks/useAddTrips";
 
 function AddTrips({ toggleForm }) {
+  const { addTrips } = useAddTrips();
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const handleSubmit = (e) => {
     e.preventDefault();
+    addTrips({
+      location: location, 
+      description: description,
+      startDate: startDate,
+      endDate: endDate
+    });
     // Here you can handle form submission, e.g., save the itinerary data
     console.log("Location:", location);
     console.log("Description:", description);
