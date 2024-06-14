@@ -1,12 +1,35 @@
 import HomeNav from "../HomeNav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
 import "./DashBoard.css";
 import AddTrips from "./AddTrips";
+import Cards from "../Cards";
+import { db } from "../../config/firebase";
 
 const Dashboard = () => {
   const [showForm, setShowForm] = useState(false);
+  const [trips, setTrips] = useState([]);
+  useEffect(() => {
+    fetchTrips();
+  }, []);
+  const fetchTrips = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "trips"));
+      const tripsData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setTrips(tripsData);
+    } catch (error) {
+      console.error("Error fetching trips: ", error);
+    }
+  };
   const toggleForm = () => {
     setShowForm(!showForm);
+  };
+  // how to add new trips after submitting the form and render the new trips?
+  const addNewTrip = (newTrip) => {
+    setTrips((prevTrips) => [...prevTrips, newTrip]);
   };
   return (
     <div>
@@ -19,13 +42,17 @@ const Dashboard = () => {
             Add a trip
           </button>
         </div>
-        <div className="no-trips-message">
-          You do not have any trips planned yet.
-        </div>
+        {trips.length === 0 ? (
+          <div className="no-trips-message">
+            You do not have any trips planned yet.
+          </div>
+        ) : (
+          <Cards trips={trips} onDelete={fetchTrips} />
+        )}
         {showForm && (
           <>
             <div className="overlay" onClick={toggleForm}></div>
-            <AddTrips toggleForm={toggleForm} />
+            <AddTrips toggleForm={toggleForm} addNewTrip={addNewTrip} />
           </>
         )}
       </div>

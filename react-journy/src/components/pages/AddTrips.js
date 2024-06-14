@@ -13,10 +13,10 @@ function AddTrips({ toggleForm }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     addTrips({
-      location: location, 
+      location: location,
       description: description,
       startDate: startDate,
-      endDate: endDate
+      endDate: endDate,
     });
     // Here you can handle form submission, e.g., save the itinerary data
     console.log("Location:", location);
@@ -54,7 +54,8 @@ function AddTrips({ toggleForm }) {
             required
           ></textarea>
           <label htmlFor="start-date">Start Date:</label>
-          <DatePicker className="date"
+          <DatePicker
+            className="date"
             showIcon
             id="start-date"
             selected={startDate}
@@ -67,7 +68,8 @@ function AddTrips({ toggleForm }) {
             dropdownMode="select"
           />
           <label htmlFor="end-date">End Date:</label>
-            <DatePicker className="date"
+          <DatePicker
+            className="date"
             showIcon
             id="end-date"
             selected={endDate}
@@ -79,7 +81,9 @@ function AddTrips({ toggleForm }) {
             dropdownMode="select"
             required
           />
-          <button type="submit" className="submit-button">Add trip</button>
+          <button type="submit" className="submit-button">
+            Add trip
+          </button>
         </form>
       </div>
     </div>
