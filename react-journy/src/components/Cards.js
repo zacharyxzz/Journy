@@ -1,7 +1,7 @@
 import React from "react";
 import CardItem from "./CardItem";
 import "./Cards.css";
-function Cards({ trips }) {
+function Cards({ trips, onDelete }) {
   return (
     <div className="cards">
       <div className="cards_container">
@@ -10,11 +10,13 @@ function Cards({ trips }) {
             {trips.map((trip) => (
               <CardItem
                 key={trip.id}
+                id={trip.id}
                 src={trip.image || "images/img-home.jpg"}
                 location={trip.location}
                 text={trip.description}
                 label={`${trip.startDate} to ${trip.endDate}`}
                 path="/trip"
+                onDelete={onDelete}
               />
             ))}
           </ul>

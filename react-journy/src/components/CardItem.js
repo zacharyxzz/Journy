@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Cards.css";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../config/firebase";
 function CardItem(props) {
+  const [deleting, setDeleting] = useState(false);
   const handleDelete = async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setDeleting(true);
     try {
-      event.preventDefault();
-      event.stopPropagation();
-      await deleteDoc(doc(db, "trips", props.key));
+      await deleteDoc(doc(db, "trips", props.id));
       console.log("Document successfully deleted!");
       props.onDelete();
-      // Optionally, you can add a notification or update state
     } catch (error) {
+      console.log(props.key);
       console.error("Error removing document: ", error);
-      // Handle error, e.g., show an error message
+      setDeleting(false);
     }
   };
   return (
@@ -33,8 +35,12 @@ function CardItem(props) {
           <div className="cards_item_info">
             <h5 className="cards_item_text">{props.text}</h5>
           </div>
-          <button className="delete-button" onClick={handleDelete}>
-            Delete
+          <button
+            className="delete-button"
+            disabled={deleting}
+            onClick={handleDelete}
+          >
+            {deleting ? "Deleting..." : "Delete"}
           </button>
         </Link>
       </li>

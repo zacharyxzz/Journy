@@ -5,10 +5,12 @@ import "./DashBoard.css";
 import AddTrips from "./AddTrips";
 import Cards from "../Cards";
 import { db } from "../../config/firebase";
+import { useAddTrips } from "../hooks/useAddTrips";
 
 const Dashboard = () => {
   const [showForm, setShowForm] = useState(false);
   const [trips, setTrips] = useState([]);
+  const { loading: addingTrip, addTrips } = useAddTrips();
   useEffect(() => {
     fetchTrips();
   }, []);
@@ -26,10 +28,6 @@ const Dashboard = () => {
   };
   const toggleForm = () => {
     setShowForm(!showForm);
-  };
-  // how to add new trips after submitting the form and render the new trips?
-  const addNewTrip = (newTrip) => {
-    setTrips((prevTrips) => [...prevTrips, newTrip]);
   };
   return (
     <div>
@@ -52,7 +50,7 @@ const Dashboard = () => {
         {showForm && (
           <>
             <div className="overlay" onClick={toggleForm}></div>
-            <AddTrips toggleForm={toggleForm} addNewTrip={addNewTrip} />
+            <AddTrips toggleForm={toggleForm} addNewTrip={fetchTrips} />
           </>
         )}
       </div>
