@@ -10,11 +10,12 @@ import { useAddTrips } from "../hooks/useAddTrips";
 const Dashboard = () => {
   const [showForm, setShowForm] = useState(false);
   const [trips, setTrips] = useState([]);
-  const { loading: addingTrip, addTrips } = useAddTrips();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     fetchTrips();
   }, []);
   const fetchTrips = async () => {
+    setLoading(true);
     try {
       const querySnapshot = await getDocs(collection(db, "trips"));
       const tripsData = querySnapshot.docs.map((doc) => ({
@@ -25,6 +26,7 @@ const Dashboard = () => {
     } catch (error) {
       console.error("Error fetching trips: ", error);
     }
+    setLoading(false);
   };
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -40,7 +42,10 @@ const Dashboard = () => {
             Add a trip
           </button>
         </div>
-        {trips.length === 0 ? (
+
+        {loading ? (
+          <div className="loading-message">Loading trips...</div>
+        ) : trips.length === 0 ? (
           <div className="no-trips-message">
             You do not have any trips planned yet.
           </div>
@@ -50,7 +55,11 @@ const Dashboard = () => {
         {showForm && (
           <>
             <div className="overlay" onClick={toggleForm}></div>
-            <AddTrips toggleForm={toggleForm} addNewTrip={fetchTrips} />
+            <AddTrips
+              className="add-trip-form"
+              toggleForm={toggleForm}
+              addNewTrip={fetchTrips}
+            />
           </>
         )}
       </div>

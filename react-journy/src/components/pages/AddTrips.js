@@ -29,9 +29,9 @@ function AddTrips({ toggleForm, addNewTrip }) {
   return (
     <div className="modal">
       <div className="itinerary-form-container">
-        <button className="close-button" onClick={toggleForm}>
+        <span className="close-button" onClick={toggleForm}>
           ✕
-        </button>
+        </span>
         <form className="itinerary-form" onSubmit={handleSubmit}>
           <h2>Add Itinerary</h2>
           <label htmlFor="location">Location:</label>

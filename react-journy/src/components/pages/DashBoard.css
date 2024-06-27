@@ -38,6 +38,13 @@
   box-sizing: border-box;
 }
 
+.loading-message {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #555;
+  margin-top: 20px;
+}
+
 @media (max-width: 600px) {
   .add-trips-container {
     flex-direction: column; /* Stack items vertically */
@@ -55,26 +62,32 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
+  width: 100%;
 }
 
 .itinerary-form-container {
   position: relative;
   background-color: #ffffff;
-  padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  max-width: 500px;
-  width: 100%;
   text-align: left;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
 }
 
 .close-button {
-  position: absolute;
-  top: 20px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: black;
+  text-decoration: none;
   cursor: pointer;
 }
 
