@@ -1,88 +1,46 @@
 import React from "react";
-import { useState } from "react";
 import HomeNav from "../HomeNav";
-import AddItineraryForm from "../AddItineraryForm";
 import "../AddItineraryForm.css";
+import { useLocation } from "react-router-dom";
+import DayPlan from "../DayPlan";
 
 function TripItinerary() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const formatTime = (time) => {
-    const date = new Date(time);
-    return date.toLocaleTimeString([], {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    });
-  };
-  const [itinerary, setItinerary] = useState([]);
+  const { location, text, label } = useLocation().state || {};
 
-  // Function to handle adding new itinerary item
-  const handleAddItinerary = (newItinerary) => {
-    setItinerary([...itinerary, newItinerary]);
-    setIsModalOpen(false);
-  };
+  function calculateDays(dateRangeStr) {
+    const [startDateStr, endDateStr] = dateRangeStr.split(" to ");
+    const startDate = new Date(startDateStr);
+    const endDate = new Date(endDateStr);
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      console.error("Invalid date format!");
+      return;
+    }
+    const diffInMs = endDate - startDate;
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+    const days = [];
+    const currentDate = new Date(startDate);
+    currentDate.setDate(currentDate.getDate() + 1);
 
-  const handleDeleteItinerary = (indexToDelete) => {
-    setItinerary(itinerary.filter((_, index) => index !== indexToDelete));
-  };
+    for (let i = 0; i <= diffInDays; i++) {
+      days.push(currentDate.toDateString());
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return days;
+  }
 
   return (
     <div>
       <HomeNav />
-
-      {isModalOpen && (
-        <div className="itinerary-modal">
-          <div className="modal-content">
-            <span className="close" onClick={() => setIsModalOpen(false)}>
-              &times;
-            </span>
-            <AddItineraryForm onAdd={handleAddItinerary} />
-          </div>
-        </div>
-      )}
-      {/* <AddItineraryForm onAdd={handleAddItinerary} /> */}
-      <div className="itinerary-list">
-        <div className="itinerary-header">
-          <h2>Places to visit</h2>
-          <button
-            className="open-modal-button"
-            onClick={() => setIsModalOpen(true)}
-          >
-            <i class="fa-solid fa-location-dot"></i>
-            Add location
-          </button>
-        </div>
-
-        {itinerary.length === 0 ? (
-          <p>No places added yet.</p>
-        ) : (
-          <ul>
-            {itinerary.map((item, index) => (
-              <li key={index} className="itinerary-item">
-                <div className="itinerary-content">
-                  <strong className="itinerary-location">
-                    {item.location.toString()}
-                  </strong>
-                  <div className="itinerary-time">
-                    {`${formatTime(item.startTime)} - ${formatTime(
-                      item.endTime
-                    )}`}
-                  </div>
-                  <div className="itinerary-details">{item.description}</div>
-
-                  <br />
-                  <button
-                    className="delete"
-                    onClick={() => handleDeleteItinerary(index)}
-                  >
-                    <i class="fa-regular fa-trash-can"></i>
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+      <div className="trip-header">
+        <h1 className="trip-title">{`Trip to ${location}`}</h1>
+        <h2 className="trip-date-range">
+          <i class="fa-regular fa-calendar-days"></i>
+          {label}
+        </h2>
       </div>
+      {calculateDays(label).map((day) => (
+        <DayPlan day={day} />
+      ))}
     </div>
   );
 }

@@ -23,7 +23,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path="/dashboard" exact element={<Dashboard />} />
             <Route path="/profile" exact element={<Profile />} />
-            <Route path="/trip" exact element={<TripItinerary />} />
+            <Route path="/trip/:id" exact element={<TripItinerary />} />
           </Route>
         </Routes>
       </AuthProvider>

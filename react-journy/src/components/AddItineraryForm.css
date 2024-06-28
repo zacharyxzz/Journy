@@ -1,3 +1,25 @@
+.trip-title {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.trip-date-range {
+  font-size: 1em;
+  color: #555;
+  margin: 20px;
+}
+
+.fa-calendar-days {
+  margin: 5px;
+}
+
+.trip-header {
+  text-align: center;
+  margin: 20px;
+  padding: 20px;
+}
+
 /* AddItineraryForm.css */
 
 .add-itinerary-form {

@@ -5,7 +5,6 @@ import "./DashBoard.css";
 import AddTrips from "./AddTrips";
 import Cards from "../Cards";
 import { db } from "../../config/firebase";
-import { useAddTrips } from "../hooks/useAddTrips";
 
 const Dashboard = () => {
   const [showForm, setShowForm] = useState(false);

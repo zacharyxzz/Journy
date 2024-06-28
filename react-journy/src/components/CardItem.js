@@ -1,39 +1,46 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Cards.css";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../config/firebase";
-function CardItem(props) {
+function CardItem({ id, label, onDelete, text, location, src }) {
+  const navigate = useNavigate();
   const [deleting, setDeleting] = useState(false);
   const handleDelete = async (event) => {
     event.preventDefault();
     event.stopPropagation();
     setDeleting(true);
     try {
-      await deleteDoc(doc(db, "trips", props.id));
+      await deleteDoc(doc(db, "trips", id));
       console.log("Document successfully deleted!");
-      props.onDelete();
+      onDelete();
     } catch (error) {
-      console.log(props.key);
       console.error("Error removing document: ", error);
       setDeleting(false);
     }
   };
+  const handleClick = () => {
+    navigate(`/trip/${id}`, {
+      state: {
+        id,
+        label,
+        text,
+        location,
+        src,
+      },
+    });
+  };
   return (
     <>
       <li className="cards_item">
-        <Link className="cards_item_link" to={props.path}>
-          <figure className="cards_item_pic-wrap" data-category={props.label}>
-            <img
-              src={props.src}
-              className="cards_item_img"
-              alt="Travel Images"
-            />
-            <h1 className="cards_item_title">{props.location}</h1>
+        <div className="cards_item_link" onClick={handleClick}>
+          <figure className="cards_item_pic-wrap" data-category={label}>
+            <img src={src} className="cards_item_img" alt="Travel Images" />
+            <h1 className="cards_item_title">{location}</h1>
           </figure>
 
           <div className="cards_item_info">
-            <h5 className="cards_item_text">{props.text}</h5>
+            <h5 className="cards_item_text">{text}</h5>
           </div>
           <button
             className="delete-button"
@@ -42,7 +49,7 @@ function CardItem(props) {
           >
             {deleting ? "Deleting..." : "Delete"}
           </button>
-        </Link>
+        </div>
       </li>
     </>
   );
