@@ -3,14 +3,17 @@ import { Link } from "react-router-dom";
 import "./Cards.css";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { useGetUserInfo } from "./hooks/useGetUserInfo";
+
 function CardItem(props) {
   const [deleting, setDeleting] = useState(false);
+  const { email } = useGetUserInfo();
   const handleDelete = async (event) => {
     event.preventDefault();
     event.stopPropagation();
     setDeleting(true);
     try {
-      await deleteDoc(doc(db, "trips", props.id));
+      await deleteDoc(doc(db, "users", email, "trips", props.id));
       console.log("Document successfully deleted!");
       props.onDelete();
     } catch (error) {
