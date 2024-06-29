@@ -3,15 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Cards.css";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { useGetUserInfo } from "./hooks/useGetUserInfo";
+
 function CardItem({ id, label, onDelete, text, location, src }) {
   const navigate = useNavigate();
   const [deleting, setDeleting] = useState(false);
+  const { email } = useGetUserInfo();
   const handleDelete = async (event) => {
     event.preventDefault();
     event.stopPropagation();
     setDeleting(true);
     try {
-      await deleteDoc(doc(db, "trips", id));
+      await deleteDoc(doc(db, "users", email, "trips", id));
       console.log("Document successfully deleted!");
       onDelete();
     } catch (error) {

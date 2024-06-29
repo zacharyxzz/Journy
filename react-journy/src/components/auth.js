@@ -1,19 +1,21 @@
 import { useState } from "react";
-import { auth } from "../config/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import "./auth.css";
 import { useAuth } from "./context/AuthContext";
 import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom";
+
 
 export const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const { signup } = useAuth();
+  const navigate = useNavigate();
   const signIn = async () => {
     try {
-      //await createUserWithEmailAndPassword(auth, email, password);
       await signup(email, password);
+      navigate("/dashboard");
+      console.log("user signed up successfully");
     } catch (error) {
       switch (error.code) {
         case "auth/weak-password":

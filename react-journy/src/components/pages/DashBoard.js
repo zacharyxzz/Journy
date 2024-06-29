@@ -5,18 +5,22 @@ import "./DashBoard.css";
 import AddTrips from "./AddTrips";
 import Cards from "../Cards";
 import { db } from "../../config/firebase";
+import { useAddTrips } from "../hooks/useAddTrips";
+import { useGetUserInfo } from "../hooks/useGetUserInfo";
 
 const Dashboard = () => {
   const [showForm, setShowForm] = useState(false);
   const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { email } = useGetUserInfo();
   useEffect(() => {
     fetchTrips();
   }, []);
   const fetchTrips = async () => {
     setLoading(true);
     try {
-      const querySnapshot = await getDocs(collection(db, "trips"));
+      const userDocRef = collection(db, "users", email, "trips");
+      const querySnapshot = await getDocs(userDocRef);
       const tripsData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
