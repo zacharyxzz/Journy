@@ -17,8 +17,8 @@ export const useAddItinerary = (tripId) => {
     date,
   }) => {
     try {
-      const formattedStartTime = startTime;
-      const formattedEndTime = endTime;
+      const formattedStartTime = startTime.toLocaleString();
+      const formattedEndTime = endTime.toLocaleString();
       await addDoc(itineraryCollectionRef, {
         location,
         description,
