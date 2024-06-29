@@ -1,11 +1,42 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddItineraryForm from "./AddItineraryForm";
 import "./AddItineraryForm.css";
+import { db } from "../config/firebase";
+import { useGetUserInfo } from "./hooks/useGetUserInfo";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 
-function DayPlan({ day }) {
+function DayPlan({ tripId, day }) {
   const [itinerary, setItinerary] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const { email } = useGetUserInfo();
+  useEffect(() => {
+    fetchItinerary();
+  }, []);
+  const fetchItinerary = async () => {
+    setLoading(true);
+    try {
+      const userDocRef = collection(
+        db,
+        "users",
+        email,
+        "trips",
+        tripId,
+        "itinerary"
+      );
+      const querySnapshot = await getDocs(userDocRef);
+      const itineraryData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setItinerary(itineraryData.filter((x) => x.date === day));
+    } catch (error) {
+      console.error("Error fetching trips: ", error);
+    }
+    setLoading(false);
+  };
   const formatTime = (time) => {
     const date = new Date(time);
     return date.toLocaleTimeString([], {
@@ -15,13 +46,23 @@ function DayPlan({ day }) {
     });
   };
   const handleAddItinerary = (newItinerary) => {
-    // setItinerary([...itinerary, newItinerary]);
-    setItinerary([...itinerary, { ...newItinerary }]);
+    fetchItinerary();
     setIsModalOpen(false);
   };
 
-  const handleDeleteItinerary = (indexToDelete) => {
-    setItinerary(itinerary.filter((_, index) => index !== indexToDelete));
+  const handleDeleteItinerary = async (tripIdToDelete) => {
+    // setItinerary(itinerary.filter((_, index) => index !== indexToDelete));
+    try {
+      setDeleting(true);
+      await deleteDoc(
+        doc(db, "users", email, "trips", tripId, "itinerary", tripIdToDelete)
+      );
+      fetchItinerary();
+      console.log("Document successfully deleted!");
+    } catch (error) {
+      console.error("Error removing document: ", error);
+    }
+    setDeleting(false);
   };
   return (
     <div className="itinerary-list">
@@ -31,7 +72,11 @@ function DayPlan({ day }) {
             <span className="close" onClick={() => setIsModalOpen(false)}>
               &times;
             </span>
-            <AddItineraryForm onAdd={handleAddItinerary} />
+            <AddItineraryForm
+              date={day}
+              tripId={tripId}
+              onAdd={handleAddItinerary}
+            />
           </div>
         </div>
       )}
@@ -45,7 +90,9 @@ function DayPlan({ day }) {
           Add location
         </button>
       </div>
-      {itinerary.length === 0 ? (
+      {loading ? (
+        <div className="loading-message">Loading itinerary...</div>
+      ) : itinerary.length === 0 ? (
         <p>No places added yet.</p>
       ) : (
         <ul>
@@ -65,9 +112,13 @@ function DayPlan({ day }) {
                 <br />
                 <button
                   className="delete"
-                  onClick={() => handleDeleteItinerary(index)}
+                  onClick={() => handleDeleteItinerary(item.id)}
                 >
-                  <i class="fa-regular fa-trash-can"></i>
+                  {deleting ? (
+                    "Deleting..."
+                  ) : (
+                    <i class="fa-regular fa-trash-can"></i>
+                  )}
                 </button>
               </div>
             </li>

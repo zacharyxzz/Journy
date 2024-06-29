@@ -5,8 +5,11 @@ import "./AddItineraryForm.css";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useAddItinerary } from "./hooks/useAddItinerary";
 
-const AddItineraryForm = ({ onAdd }) => {
+const AddItineraryForm = ({ tripId, onAdd, date }) => {
+  const { addItinerary } = useAddItinerary(tripId);
+
   const [startTime, setStartTime] = useState("10:00");
 
   const [endTime, setEndTime] = useState("10:00");
@@ -17,11 +20,13 @@ const AddItineraryForm = ({ onAdd }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // // Basic validation, you can add more validation as needed
-    // if (!activities.trim()) {
-    //   alert("Please add location fields.");
-    //   return;
-    // }
+    addItinerary({
+      location: location.split(",").map((activity) => activity.trim()),
+      description: description,
+      startTime: startTime,
+      endTime: endTime,
+      date: date,
+    });
 
     // Create a new itinerary item
     const newItinerary = {

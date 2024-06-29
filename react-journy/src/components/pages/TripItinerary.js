@@ -5,7 +5,8 @@ import { useLocation } from "react-router-dom";
 import DayPlan from "../DayPlan";
 
 function TripItinerary() {
-  const { location, text, label } = useLocation().state || {};
+  const { id, location, text, label } = useLocation().state || {};
+  console.log(id);
 
   function calculateDays(dateRangeStr) {
     const [startDateStr, endDateStr] = dateRangeStr.split(" to ");
@@ -39,7 +40,7 @@ function TripItinerary() {
         </h2>
       </div>
       {calculateDays(label).map((day) => (
-        <DayPlan day={day} />
+        <DayPlan tripId={id} day={day} />
       ))}
     </div>
   );
