@@ -6,7 +6,6 @@ import DayPlan from "../DayPlan";
 
 function TripItinerary() {
   const { id, location, text, label } = useLocation().state || {};
-  console.log(id);
 
   function calculateDays(dateRangeStr) {
     const [startDateStr, endDateStr] = dateRangeStr.split(" to ");
