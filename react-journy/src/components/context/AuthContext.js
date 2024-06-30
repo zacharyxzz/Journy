@@ -1,5 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../../config/firebase";
+import { db } from "../../config/firebase";
+import { setDoc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -15,9 +18,21 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-
-  function signup(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password);
+  async function signup(email, password) {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    try {
+      await setDoc(doc(db, "users", email), {
+        UID: cred.user.uid
+      });
+      const authInfo = {
+        email: email
+      }
+      localStorage.setItem("auth", JSON.stringify(authInfo));
+      console.log("user document created");
+    } catch (error) {
+      console.error("Error creating user document: ", error);
+      throw error;
+    }
   }
 
   function login(email, password) {

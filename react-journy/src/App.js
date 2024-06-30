@@ -9,6 +9,8 @@ import PrivateRoutes from "./components/utils/PrivateRoutes";
 import { AuthProvider } from "./components/context/AuthContext";
 import ForgotPassword from "./components/ForgotPassword";
 import Profile from "./components/pages/Profile";
+import AddTrips from "./components/pages/AddTrips";
+import TripItinerary from "./components/pages/TripItinerary";
 function App() {
   return (
     <Router>
@@ -21,6 +23,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path="/dashboard" exact element={<Dashboard />} />
             <Route path="/profile" exact element={<Profile />} />
+            <Route path="/trip/:id" exact element={<TripItinerary />} />
           </Route>
         </Routes>
       </AuthProvider>

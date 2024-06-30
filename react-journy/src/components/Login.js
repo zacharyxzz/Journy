@@ -6,7 +6,6 @@ import {
 } from "firebase/auth";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import DashBoard from "./pages/DashBoard";
 import { useAuth } from "./context/AuthContext";
 import Navbar from "./Navbar";
 
@@ -17,6 +16,11 @@ export const Login = () => {
   const [loginMessage, setLoginMessage] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
+
+  const authInfo = {
+    email: loginEmail
+  }
+  localStorage.setItem("auth", JSON.stringify(authInfo));
 
   const signIn = async (event) => {
     event.preventDefault(); // Prevent the default form submission
